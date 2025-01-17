@@ -4,9 +4,10 @@
 
 {% block contenido %}
     <h2>Detalles del Animal</h2>
-    <p>{{imagen}}</p>
+    <img src="{{ animal.imagen.url }}" alt="" />
     <p>Nombre: {{ animal.nombre }}</p>
     <p>Fecha de nacimiento: {{ animal.fecha_nacimiento }}</p>
     <p>Situación: {{ animal.situacion }}</p>
+    <p>Edad: {{animal.edad}}</p>
     <a href="{% url 'animales' %}">Volver a la lista</a>
 {% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'appmustafa/base.html' %}
+
+        {% block titulo %}CONFIRMAR BORRADO{% endblock %}
+        {% block contenido %}
+        <h2>Estás seguro de que quieres borrar a {{comentario.contenido}}</h2>
+        <form action="" method="POST">
+                {% csrf_token %}
+                <input type="submit" value="Si">
+                
+        </form>
+        <a href="{% url 'listarComentarios' %}"><input type="button" value="NO"></input></a>
+        {% endblock %}

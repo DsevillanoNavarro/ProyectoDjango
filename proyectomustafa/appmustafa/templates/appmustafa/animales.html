@@ -2,14 +2,27 @@
 {% block titulo %}Animales{% endblock titulo %}
 {% block contenido %}
 
+<form method="get" action="" class="mb-4">
+    <label for="orden" class="form-label">Ordenar por edad:</label>
+    <select name="orden" id="orden" class="form-select" onchange="this.form.submit()">
+        <option value="desc" {% if request.GET.orden == 'desc' %}selected{% endif %}>De mayor a menor</option>
+        <option value="asc" {% if request.GET.orden == 'asc' %}selected{% endif %}>De menor a mayor</option>
+    </select>
+</form>
+
+<div class="row">
     {% for animal in animales %}
-    <img src="{{ animal.imagen.url }}" alt="Imagen de {{ animal.nombre }}" width="300">
-    <div class="card-body">
-      <h5 class="card-title">{{animal}}</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="{% url 'detalleAnimales' pk=animal.pk  %}" class="btn btn-primary">Go somewhere</a>
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <img src="{{ animal.imagen.url }}" alt="Imagen de {{ animal.nombre }}" class="card-img-top" width="300">
+            <div class="card-body">
+                <h5 class="card-title">{{ animal.nombre }}</h5>
+                <p class="card-text">Edad: {{ animal.edad }} años</p>
+                <a href="{% url 'detalleAnimales' pk=animal.pk %}" class="btn btn-primary">Ver detalles</a>
+            </div>
+        </div>
     </div>
     {% endfor %}
-
+</div>
 
 {% endblock contenido %}

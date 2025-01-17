@@ -1,0 +1,14 @@
+{% extends 'appmustafa/base.html' %}
+
+{% block titulo %}Registro{% endblock %}
+
+{% block contenido %}
+    <h2>Crear una cuenta</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Registrarse</button>
+    </form>
+
+
+{% endblock %}

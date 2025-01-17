@@ -1,12 +1,31 @@
 {% extends 'appmustafa/base.html' %}
 
-{% block titulo %}Detalles de la noticia{% endblock %}
+{% block titulo %}
+  Detalles de la noticia
+{% endblock %}
 
 {% block contenido %}
-    <h2>Detalles de la noticia</h2>
-    <img src="{{ noticia.imagen.url }}" alt="">
-    <p>Titulo: {{ noticia.titulo }}</p>
-    <p>Contenido: {{ noticia.contenido }}</p>
-    <p>Fecha de publiacacion: {{ noticia.fecha_publicacion }}</p>
-    <a href="{% url 'animales' %}">Volver a la lista</a>
+  <h2>Detalles de la noticia</h2>
+  <img src="{{ noticia.imagen.url }}" alt="" />
+  <p>Titulo: {{ noticia.titulo }}</p>
+  <p>Contenido: {{ noticia.contenido }}</p>
+  <p>Fecha de publiacacion: {{ noticia.fecha_publicacion }}</p>
+  <a href="{% url 'animales' %}">Volver a la lista</a>
+  <h2>Comentarios</h2>
+  <ul>
+    <h2>Agregar un comentario</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Enviar</button>
+    </form>
+    {% for comentario in comentarios %}
+      <li>
+        <strong>{{ comentario.usuario.username }} {{comentario.fecha_hora}} {{comentario.tiempo_transcurrido}} :</strong>
+        {{ comentario.contenido }}
+      </li>
+    {% empty %}
+      <li>No hay comentarios aún.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}
