@@ -1,24 +1,111 @@
-nav{
-    display: flex;
-    background-color: red;
+/* Fondo del navbar */
+#contenedorNavegacion {
+    background-color: #000; /* Negro puro */
+    border-bottom: 2px solid white;
+  }
+  
+  /* Estilo del logo */
+  #contenedorlogoNav img {
+    max-height: 80px; /* Incrementa el tamaño del logo */
+  }
+  
+  /* Estilo de los enlaces del menú */
+  .linksHeader {
+    color: white; /* Texto blanco */
+    font-size: 1.3rem; /* Tamaño mayor del texto */
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+  
+  .linksHeader:hover {
+    color: #f0f0f0; /* Blanco al pasar el ratón */
+    text-decoration: none; /* Sin subrayado */
+  }
+  
+  /* Botón del menú móvil */
+  .navbar-toggler {
+    border-color: white;
+  }
+  
+  .navbar-toggler-icon {
+    background-color: white;
+  }
+  
+  /* Estilo del ícono del usuario */
+  #iconoUser {
+    width: 50px; /* Tamaño más grande del ícono */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  #iconoUser:hover {
+    transform: scale(1.1); /* Efecto de zoom al pasar el ratón */
+  }
+  
+  /* Estilo del menú desplegable */
+  .dropdown-menu {
+    background-color: #000; /* Negro puro */
+    border: 1px solid white; /* Bordes blancos */
+  }
+  
+  .dropdown-item {
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .dropdown-item:hover {
+    background-color: white; /* Fondo blanco */
+    color: black; /* Texto negro */
+  }
+  
+  /* Espaciado adicional para alineación estética */
+  .nav-item {
+    margin: 0 10px;
+  }
+  
+  .no-padding {
+    padding: 0 !important;
 }
-.contieneLinksNav{
-    
+/* Estilo por defecto de los enlaces */
+.nav-link {
+    color: white;
+    transition: color 0.3s ease, transform 0.3s ease;  /* Transición suave para el texto y el transform */
 }
-#contenedorContenidoNav{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1em;
-    margin-right: 0.5em;
-    width: 100%;
-    font-size: 40px;
+
+/* Estilo por defecto de los elementos de lista */
+.nav-item {
+    position: relative;  /* Necesario para el efecto de sombra */
+    transition: background-color 0.3s ease, transform 0.3s ease;  /* Transición para el fondo y la transformación */
 }
-#iconoUser{
-    width: 12%;
-    transition: all 0.3s;
+
+/* Efecto al pasar el ratón sobre el <li> */
+.nav-item:hover {
+    background-color: #ffffff;  /* Fondo blanco cuando se pasa el ratón */
+    transform: scale(1.05);  /* Aumenta ligeramente el tamaño */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);  /* Agrega una sombra suave */
 }
-#iconoUser:hover{
-    width: 13%;
-    
+
+/* Cambiar el color del texto del enlace al hacer hover */
+.nav-item:hover .nav-link {
+    color: #333;  /* Cambia el color del texto a un gris oscuro */
+    filter: none;  /* Elimina el filtro en blanco y negro */
+    font-weight: bold;  /* Hace el texto en negrita para más énfasis */
+}
+
+/* Animación de desvanecimiento suave para el fondo */
+.nav-item {
+    background-color: #000;  /* Fondo negro por defecto */
+    transition: background-color 0.4s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease;  /* Transición suave para fondo, sombra y transformación */
+}
+
+/* Efecto de animación de resaltar el texto con un efecto sutil */
+.nav-item:hover .nav-link {
+    color: #000;  /* Cambia el color del texto a negro */
+    transition: color 0.4s ease-in-out;  /* Transición más suave en color */
+}
+
+/* Transición para hacer que el enlace tenga un borde cuando se pasa el ratón */
+.nav-item:hover .nav-link {
+    border-bottom: 2px solid #333;  /* Aplica un borde sutil debajo del enlace */
 }

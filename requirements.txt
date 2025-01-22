@@ -1,2 +1,4 @@
 Django==5.1.3
-Pillow
+Pillow==11.1.0
+mysql-connector-python==9.2.0
+python-decouople==3.8

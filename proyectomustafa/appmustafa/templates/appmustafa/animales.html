@@ -1,28 +1,38 @@
 {% extends 'appmustafa/base.html' %}
+{% load static %}
+{% block estilo %} <link rel="stylesheet" href="{% static 'css/animales.css' %}"> {% endblock estilo %}
 {% block titulo %}Animales{% endblock titulo %}
 {% block contenido %}
 
-<form method="get" action="" class="mb-4">
-    <label for="orden" class="form-label">Ordenar por edad:</label>
-    <select name="orden" id="orden" class="form-select" onchange="this.form.submit()">
-        <option value="desc" {% if request.GET.orden == 'desc' %}selected{% endif %}>De mayor a menor</option>
-        <option value="asc" {% if request.GET.orden == 'asc' %}selected{% endif %}>De menor a mayor</option>
-    </select>
-</form>
+<!-- Formulario ordenado -->
+<div class="container mb-4">
+    <form method="get" action="" class="d-flex justify-content-end">
+        <label for="orden" class="form-label me-2">Ordenar por edad:</label>
+        <select name="orden" id="orden" class="form-select form-select-sm" onchange="this.form.submit()">
+            <option value="desc" {% if request.GET.orden == 'desc' %}selected{% endif %}>De mayor a menor</option>
+            <option value="asc" {% if request.GET.orden == 'asc' %}selected{% endif %}>De menor a mayor</option>
+        </select>
+    </form>
+</div>
 
-<div class="row">
-    {% for animal in animales %}
-    <div class="col-md-4">
-        <div class="card mb-4">
-            <img src="{{ animal.imagen.url }}" alt="Imagen de {{ animal.nombre }}" class="card-img-top" width="300">
-            <div class="card-body">
-                <h5 class="card-title">{{ animal.nombre }}</h5>
-                <p class="card-text">Edad: {{ animal.edad }} años</p>
-                <a href="{% url 'detalleAnimales' pk=animal.pk %}" class="btn btn-primary">Ver detalles</a>
+<!-- Contenedor de tarjetas de animales -->
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            {% for animal in animales %}
+            <div class="col">
+                <div class="card shadow-sm border-light rounded card-hover">
+                    <img src="{{ animal.imagen.url }}" alt="Imagen de {{ animal.nombre }}" class="card-img-top" style="height: 225px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ animal.nombre }}</h5>
+                        <p class="card-text">Edad: {{ animal.edad }} años</p>
+                        <a href="{% url 'detalleAnimales' pk=animal.pk %}" class="btn btn-primary btn-hover">Ver detalles</a>
+                    </div>
+                </div>
             </div>
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
 </div>
 
 {% endblock contenido %}
