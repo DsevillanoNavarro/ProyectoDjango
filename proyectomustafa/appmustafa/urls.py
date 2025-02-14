@@ -30,9 +30,7 @@ urlpatterns = [
     path('noticias/<int:pk>', DetallesNoticias.as_view(), name="detalleNoticias"),
     # path('contacto/', views.contacto, name="contacto"),
     path('registro/', CrearRegistro.as_view(), name="crearRegistro"),
-    # path('login/', views.login, name="login"),
     path('usuario/', UserMenuView.as_view(), name="usuario"),
-    # path('usuario/animalesQueridos', views.animalesQueridos, name="animalesQueridos"),
     path('usuario/admin/crearAnimal', CrearAnimales.as_view(), name="crearAnimales"),
     path('usuario/admin/listarAnimales', ListarAnimales.as_view(), name="listarAnimales"),
     path('usuario/admin/editarAnimal/<int:pk>', EditarAnimales.as_view(), name="editarAnimal"),
@@ -44,8 +42,11 @@ urlpatterns = [
     path('usuario/admin/borrarComentarios/<int:pk>', BorrarComentarios.as_view(), name="borrarComentarios"),
     path('usuario/admin/editarNoticia/<int:pk>', EditarNoticias.as_view(), name="editarNoticias"),
     path('usuario/admin/borrarNoticia/<int:pk>', BorrarNoticias.as_view(), name="borrarNoticias"),
-    # path('usuario/admin/datosAnimales', views.datosAnimales, name="datosAnimales"),
-    # path('usuario/admin/datosNoticias', views.datosNoticias, name="datosNoticias"),
+    
+    path('crearAdopciones/<int:pk>', CrearAdopciones.as_view(), name="crearAdopciones"),
+    path('usuario/admin/listarAdopciones', ListarAdopciones.as_view(), name="listarAdopciones"),
+    path('usuario/admin/detalleAdopciones/<int:pk>', DetalleAdopciones.as_view(), name="detalleAdopciones"),
+    path('usuario/admin/borrarAdopciones/<int:pk>', BorrarAdopciones.as_view(), name="borrarAdopciones"),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

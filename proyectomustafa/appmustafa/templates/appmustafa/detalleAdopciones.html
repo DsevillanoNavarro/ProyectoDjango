@@ -1,0 +1,14 @@
+{% extends 'appmustafa/base.html' %}
+{% block titulo %}Detalle adocpiones{% endblock titulo %}
+{% block contenido %}
+
+<p>Adoptante: {{adopcion.usuario}}<p>
+<p>Animal: {{adopcion.animal}}</p>
+<p>Mensaje: <p>
+<p>{{adopcion.contenido}}</p>
+<p>Estado: {{adopcion.aceptada}}</p>
+<form method="POST" action="">
+    {% csrf_token %}
+    <button type="submit">Aceptar adopción</button>
+</form>
+{% endblock contenido %}

@@ -10,8 +10,12 @@
     <li class="nav-item">
       <a class="nav-link active" aria-current="page" href="">Información</a>
     </li>
+    {% if user.is_staff %}
     <li class="nav-item">
       <a class="nav-link" href="{% url 'listarAnimales' %}">Animales</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'listarAdopciones' %}">Adopciones</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{% url 'listarNoticias' %}">Noticias</a>
@@ -19,6 +23,7 @@
     <li class="nav-item">
       <a class="nav-link" aria-disabled="true" href="{% url 'listarComentarios' %}">Comentarios</a>
     </li>
+    {% endif %}
   </ul>
 </div>
     <div>

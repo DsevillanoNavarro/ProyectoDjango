@@ -70,3 +70,15 @@ class Comentario(models.Model):
     class Meta:
         verbose_name = 'Comentario'
         verbose_name_plural = 'Comentarios'
+
+class Adopcion(models.Model):
+    animal = models.ForeignKey(Animal, on_delete=models.CASCADE, related_name="adopciones")
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name="adopciones")
+    fecha_hora = models.DateTimeField(auto_now_add=True) 
+    aceptada = models.BooleanField(default=False)
+    contenido = models.TextField(max_length=1000)
+    class Meta:
+        verbose_name = 'Adopcion'
+        verbose_name_plural = 'Adopciones'
+    def __str__(self):
+        return self.animal.nombre

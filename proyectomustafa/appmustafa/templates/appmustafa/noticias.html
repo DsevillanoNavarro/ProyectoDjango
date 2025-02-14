@@ -2,10 +2,15 @@
 {% block titulo %}Noticias{% endblock titulo %}
 {% block contenido %}
 
+<form method="GET" action="{% url 'noticias' %}">
+  <input type="text" name="buscaNoticia" placeholder="Buscar noticias..." value="{{ request.GET.buscaNoticia }}">
+  <button type="submit">Buscar</button>
+</form>
+
     {% for noticia in noticias %}
     <img src="{{ noticia.imagen.url }}" alt="Imagen de {{ noticia.titulo }}" width="300">
     <div class="card-body">
-      <h5 class="card-title">{{noticia}}</h5>
+      <h5 class="card-title">{{noticia}} {{noticia.fecha_publicacion}}</h5> 
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
       <a href="{% url 'detalleNoticias' pk=noticia.pk  %}" class="btn btn-primary">Go somewhere</a>
     </div>

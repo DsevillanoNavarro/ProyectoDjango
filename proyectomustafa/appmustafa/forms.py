@@ -1,7 +1,7 @@
 from datetime import date
 from django import forms
 from django.forms import ModelForm, Textarea, ValidationError
-from appmustafa.models import Animal, Noticia, Comentario
+from appmustafa.models import Animal, Noticia, Comentario, Adopcion
 class animales_form(forms.ModelForm):
     class Meta:
         model = Animal
@@ -22,3 +22,11 @@ class comentarios_form(forms.ModelForm):
     class Meta:
         model = Comentario
         fields = ['contenido']
+
+class adopciones_form(forms.ModelForm):
+    class Meta:
+        model = Adopcion
+        fields = '__all__'
+        widgets = {
+            'fecha_hora': forms.DateInput(format='%Y-%m-%d', attrs={'type': 'date'}),
+            }

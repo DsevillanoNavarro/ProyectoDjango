@@ -9,5 +9,9 @@
     <p>Fecha de nacimiento: {{ animal.fecha_nacimiento }}</p>
     <p>Situación: {{ animal.situacion }}</p>
     <p>Edad: {{animal.edad}}</p>
+    <form method="post" action="{% url 'crearAdopciones' pk=animal.pk %}">
+        {% csrf_token %}
+        <button type="submit">Adoptar</button>
+    </form>
     <a href="{% url 'animales' %}">Volver a la lista</a>
 {% endblock %}

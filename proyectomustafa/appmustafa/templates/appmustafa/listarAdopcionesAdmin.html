@@ -1,0 +1,13 @@
+{% extends 'appmustafa/base.html' %}
+{% block titulo %}
+    LISTADO ADOPCIONES
+{% endblock titulo %}
+    
+{% block contenido %}
+<ul class="list-group">
+{% for adopcion in adopciones %}
+<li class="list-group-item " aria-current="true"><a class="btn btn-primary" href="{% url 'detalleAdopciones' pk=adopcion.pk  %}">{{adopcion}}</a> &#9;<a class="btn btn-danger" href="{% url 'borrarAdopciones' pk=adopcion.pk  %}">Borrar</a></li>
+{% endfor %}
+<ul>
+<a class="btn btn-warning" href="{%url 'usuario' %}">VOLVER</a>
+{% endblock contenido %}

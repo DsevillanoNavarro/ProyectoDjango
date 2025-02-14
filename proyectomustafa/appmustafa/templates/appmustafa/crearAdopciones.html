@@ -1,0 +1,10 @@
+{% extends 'appmustafa/base.html' %}
+
+{% block contenido %}
+<form method="post">
+    {% csrf_token %}
+    <p>¿Quieres adoptar a este gato?</p>
+    {{form}}
+    <input type="submit" value="Agregar">
+</form>
+{% endblock contenido %}
