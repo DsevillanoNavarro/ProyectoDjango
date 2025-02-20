@@ -1,9 +1,24 @@
 {% extends 'appmustafa/base.html' %}
 {% block titulo %}Editar Animal{% endblock titulo %}
+
 {% block contenido %}
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" value="Agregar">
-</form>
+<div class="container mt-5">
+  <div class="card shadow-sm bg-dark text-white">
+    <div class="card-header bg-black text-white">
+      <h3 class="mb-0">Editar Animal</h3>
+    </div>
+    <div class="card-body">
+      <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-center mt-3">
+          <button type="submit" class="btn btn-outline-light">Guardar Cambios</button>
+        </div>
+      </form>
+      <div class="mt-4 text-center">
+        <a href="{% url 'listarNoticias' %}" class="btn btn-warning">Volver</a>
+    </div>
+    </div>
+  </div>
+</div>
 {% endblock contenido %}

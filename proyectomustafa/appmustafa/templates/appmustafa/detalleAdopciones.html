@@ -1,14 +1,25 @@
 {% extends 'appmustafa/base.html' %}
-{% block titulo %}Detalle adocpiones{% endblock titulo %}
+{% block titulo %}Detalle Adopciones{% endblock titulo %}
 {% block contenido %}
-
-<p>Adoptante: {{adopcion.usuario}}<p>
-<p>Animal: {{adopcion.animal}}</p>
-<p>Mensaje: <p>
-<p>{{adopcion.contenido}}</p>
-<p>Estado: {{adopcion.aceptada}}</p>
-<form method="POST" action="">
-    {% csrf_token %}
-    <button type="submit">Aceptar adopción</button>
-</form>
+<div class="container mt-5">
+  <div class="card shadow-sm bg-dark text-white">
+    <div class="card-header bg-black text-white">
+      <h3 class="mb-0">Detalle de Adopción</h3>
+    </div>
+    <div class="card-body">
+      <p class="mb-2"><strong>Adoptante:</strong> {{ adopcion.usuario }}</p>
+      <p class="mb-2"><strong>Animal:</strong> {{ adopcion.animal }}</p>
+      <p class="mb-2"><strong>Mensaje:</strong></p>
+      <p class="mb-3">{{ adopcion.contenido }}</p>
+      <p class="mb-4"><strong>Estado:</strong> {{ adopcion.aceptada }}</p>
+      <form method="POST" action="">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-light">Aceptar adopción</button>
+      </form>
+      <div class="mt-4 text-center">
+        <a href="{% url 'listarAnimales' %}" class="btn btn-warning">Volver</a>
+    </div>
+    </div>
+  </div>
+</div>
 {% endblock contenido %}
