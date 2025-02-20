@@ -22,6 +22,7 @@ class Animales(ListView):
     model=Animal
     template_name='appmustafa/animales.html'
     context_object_name = 'animales'
+    paginate_by = 6
     def get_queryset(self):
         orden = self.request.GET.get('orden', 'desc')  
         if orden == 'asc':
@@ -93,6 +94,7 @@ class Noticias(ListView):
     model=Noticia
     template_name='appmustafa/noticias.html'
     context_object_name = 'noticias'
+    paginate_by = 3
     
     
     

@@ -5,31 +5,88 @@
     
 {% block contenido %}
 <div class="container-fluid d-flex">
-<div class="container-fluid  w-25 m-0" style="">
-<ul class="nav flex-column">
-    <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="">Información</a>
-    </li>
-    {% if user.is_staff %}
-    <li class="nav-item">
-      <a class="nav-link" href="{% url 'listarAnimales' %}">Animales</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{% url 'listarAdopciones' %}">Adopciones</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{% url 'listarNoticias' %}">Noticias</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" aria-disabled="true" href="{% url 'listarComentarios' %}">Comentarios</a>
-    </li>
-    {% endif %}
-  </ul>
-</div>
-    <div>
-        <h1>Nombre: {{ user.username }}</h1>
-        <p>Fecha de creación de la cuenta: {{ user.date_joined }}</p>
-        <p>Ultimo inicio de sesión: {{ user.last_login }}</p>
+  <!-- Menú lateral animado -->
+  <div class="container-fluid w-25 m-0 p-0">
+    <ul class="nav flex-column bg-dark text-white">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="">Información</a>
+      </li>
+      {% if user.is_staff %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'listarAnimales' %}">Animales</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'listarAdopciones' %}">Adopciones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'listarNoticias' %}">Noticias</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" aria-disabled="true" href="{% url 'listarComentarios' %}">Comentarios</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+
+  <!-- Información del usuario -->
+  <div class="container w-75 p-4">
+    <h1 class="display-4 mb-4">Bienvenido, {{ user.username }}</h1>
+    <div class="card p-4 bg-light">
+      <h3>Detalles de la cuenta:</h3>
+      <p><strong>Fecha de creación:</strong> {{ user.date_joined }}</p>
+      <p><strong>Último inicio de sesión:</strong> {{ user.last_login }}</p>
     </div>
+  </div>
 </div>
+
 {% endblock contenido %}
+
+{% block extra_js %}
+<!-- Animaciones con CSS y efectos hover -->
+<style>
+  /* Estilo básico para el menú */
+  .nav-link {
+    transition: all 0.3s ease-in-out;
+  }
+
+  /* Efecto de hover: cambio de color y deslizamiento */
+  .nav-link:hover {
+    background-color: #007bff;
+    color: white;
+    transform: translateX(10px);
+  }
+
+  .nav-item {
+    padding: 10px 20px;
+  }
+
+  /* Menú lateral con animación de deslizamiento */
+  .nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 250px;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .nav-item {
+    font-size: 1.2rem;
+  }
+
+  /* Efecto al cargar el menú */
+  .nav-link.active {
+    background-color: #0056b3;
+    transform: translateX(10px);
+  }
+
+  /* Información del usuario */
+  .container .card {
+    border-radius: 10px;
+  }
+
+  .display-4 {
+    color: #343a40;
+  }
+</style>
+{% endblock %}

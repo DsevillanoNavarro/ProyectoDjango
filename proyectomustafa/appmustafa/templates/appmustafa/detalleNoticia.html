@@ -5,27 +5,50 @@
 {% endblock %}
 
 {% block contenido %}
-  <h2>Detalles de la noticia</h2>
-  <img src="{{ noticia.imagen.url }}" alt="" />
-  <p>Titulo: {{ noticia.titulo }}</p>
-  <p>Contenido: {{ noticia.contenido }}</p>
-  <p>Fecha de publiacacion: {{ noticia.fecha_publicacion }}</p>
-  <a href="{% url 'animales' %}">Volver a la lista</a>
-  <h2>Comentarios</h2>
-  <ul>
-    <h2>Agregar un comentario</h2>
-    <form method="post">
+<div class="container mt-5">
+  <!-- Título de la noticia -->
+  <h2 class="text-center mb-4">Detalles de la noticia</h2>
+
+  <!-- Imagen de la noticia -->
+  <div class="text-center mb-4">
+    <img src="{{ noticia.imagen.url }}" alt="Imagen de {{ noticia.titulo }}" class="img-fluid rounded">
+  </div>
+
+  <!-- Información de la noticia -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h3 class="card-title">{{ noticia.titulo }}</h3>
+      <p class="card-text">{{ noticia.contenido }}</p>
+      <p><strong>Fecha de publicación:</strong> {{ noticia.fecha_publicacion }}</p>
+      <a href="{% url 'animales' %}" class="btn btn-dark">Volver a la lista</a>
+    </div>
+  </div>
+
+  <!-- Sección de comentarios -->
+  <div class="mt-5">
+    <h2 class="mb-4">Comentarios</h2>
+    
+    <!-- Formulario para agregar comentario -->
+    <h3>Agregar un comentario</h3>
+    <form method="post" class="mb-4">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Enviar</button>
+      <div class="form-group">
+        {{ form.as_p }}
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
-    {% for comentario in comentarios %}
-      <li>
-        <strong>{{ comentario.usuario.username }} {{comentario.fecha_hora}} {{comentario.tiempo_transcurrido}} :</strong>
-        {{ comentario.contenido }}
-      </li>
-    {% empty %}
-      <li>No hay comentarios aún.</li>
-    {% endfor %}
-  </ul>
+
+    <!-- Lista de comentarios -->
+    <ul class="list-group">
+      {% for comentario in comentarios %}
+        <li class="list-group-item">
+          <strong>{{ comentario.usuario.username }} ({{ comentario.fecha_hora }} - {{ comentario.tiempo_transcurrido }}):</strong>
+          <p>{{ comentario.contenido }}</p>
+        </li>
+      {% empty %}
+        <li class="list-group-item">No hay comentarios aún.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 {% endblock %}

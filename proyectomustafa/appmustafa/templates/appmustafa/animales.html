@@ -1,38 +1,83 @@
 {% extends 'appmustafa/base.html' %}
 {% load static %}
-{% block estilo %} <link rel="stylesheet" href="{% static 'css/animales.css' %}"> {% endblock estilo %}
+{% block estilo %} 
+  <link rel="stylesheet" href="{% static 'css/animales.css' %}"> 
+{% endblock estilo %}
+
 {% block titulo %}Animales{% endblock titulo %}
+
 {% block contenido %}
 
-<!-- Formulario ordenado -->
-<div class="container mb-4">
-    <form method="get" action="" class="d-flex justify-content-end">
-        <label for="orden" class="form-label me-2">Ordenar por edad:</label>
-        <select name="orden" id="orden" class="form-select form-select-sm" onchange="this.form.submit()">
-            <option value="desc" {% if request.GET.orden == 'desc' %}selected{% endif %}>De mayor a menor</option>
-            <option value="asc" {% if request.GET.orden == 'asc' %}selected{% endif %}>De menor a mayor</option>
-        </select>
-    </form>
+<!-- Contenedor del filtro de ordenación -->
+<div class="container mb-4 text-center">
+  <form method="get" action="" class="d-inline-flex align-items-center filtro-container">
+    <label for="orden" class="form-label me-2 fw-bold">Ordenar por edad:</label>
+    <div class="select-container">
+      <select name="orden" id="orden" class="form-select custom-select" onchange="this.form.submit()">
+        <option value="desc" {% if request.GET.orden == 'desc' %}selected{% endif %}>De mayor a menor</option>
+        <option value="asc" {% if request.GET.orden == 'asc' %}selected{% endif %}>De menor a mayor</option>
+      </select>
+      <span class="arrow">&#9662;</span> <!-- Flecha decorativa -->
+    </div>
+  </form>
 </div>
 
 <!-- Contenedor de tarjetas de animales -->
-<div class="album py-5 bg-light">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
-            {% for animal in animales %}
-            <div class="col">
-                <div class="card shadow-sm border-light rounded card-hover">
-                    <img src="{{ animal.imagen.url }}" alt="Imagen de {{ animal.nombre }}" class="card-img-top" style="height: 225px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ animal.nombre }}</h5>
-                        <p class="card-text">Edad: {{ animal.edad }} años</p>
-                        <a href="{% url 'detalleAnimales' pk=animal.pk %}" class="btn btn-primary btn-hover">Ver detalles</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+<div class="album py-5 bg-dark">
+  <div class="container">
+    <!-- Forzamos 3 tarjetas por fila en dispositivos medianos y grandes -->
+    <div class="row g-4">
+      {% for animal in animales %}
+      <div class="col-12 col-md-4">
+        <div class="card shadow-sm border-light rounded card-hover bg-black text-white">
+          <img src="{{ animal.imagen.url }}" alt="Imagen de {{ animal.nombre }}" class="card-img-top"
+               style="height: 225px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ animal.nombre }}</h5>
+            <p class="card-text">Edad: {{ animal.edad }} años</p>
+            <a href="{% url 'detalleAnimales' pk=animal.pk %}" class="btn btn-outline-light btn-hover">Ver detalles</a>
+          </div>
         </div>
+      </div>
+      {% endfor %}
     </div>
+
+    <!-- Paginación -->
+    <div class="d-flex justify-content-center mt-4">
+      <nav>
+        <ul class="pagination">
+          {% if animales.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1&orden={{ request.GET.orden }}" aria-label="Primera">
+              <span aria-hidden="true">&laquo;&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ animales.previous_page_number }}&orden={{ request.GET.orden }}" aria-label="Anterior">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          {% endif %}
+          <li class="page-item disabled">
+            <span class="page-link">Página {{ animales.number }} de {{ animales.paginator.num_pages }}</span>
+          </li>
+          {% if animales.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ animales.next_page_number }}&orden={{ request.GET.orden }}" aria-label="Siguiente">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ animales.paginator.num_pages }}&orden={{ request.GET.orden }}" aria-label="Última">
+              <span aria-hidden="true">&raquo;&raquo;</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+
+  </div>
 </div>
 
 {% endblock contenido %}

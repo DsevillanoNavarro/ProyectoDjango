@@ -1,20 +1,64 @@
 {% extends 'appmustafa/base.html' %}
-{% block titulo %}Noticias{% endblock titulo %}
-{% block contenido %}
 
-<form method="GET" action="{% url 'noticias' %}">
-  <input type="text" name="buscaNoticia" placeholder="Buscar noticias..." value="{{ request.GET.buscaNoticia }}">
-  <button type="submit">Buscar</button>
+{% block titulo %}Noticias{% endblock titulo %}
+
+{% block contenido %}
+<!-- Formulario de búsqueda -->
+<form method="GET" action="{% url 'noticias' %}" class="d-flex mb-4">
+  <input type="text" name="buscaNoticia" class="form-control me-2" placeholder="Buscar noticias..." value="{{ request.GET.buscaNoticia }}">
+  <button type="submit" class="btn btn-dark">Buscar</button>
 </form>
 
+<!-- Contenedor de tarjetas de noticias -->
+<div class="row">
     {% for noticia in noticias %}
-    <img src="{{ noticia.imagen.url }}" alt="Imagen de {{ noticia.titulo }}" width="300">
-    <div class="card-body">
-      <h5 class="card-title">{{noticia}} {{noticia.fecha_publicacion}}</h5> 
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="{% url 'detalleNoticias' pk=noticia.pk  %}" class="btn btn-primary">Go somewhere</a>
+    <div class="col-md-4 mb-4">
+        <div class="card text-white bg-dark">
+            <img src="{{ noticia.imagen.url }}" class="card-img-top" alt="Imagen de {{ noticia.titulo }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ noticia.titulo }} - {{ noticia.fecha_publicacion }}</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="{% url 'detalleNoticias' pk=noticia.pk  %}" class="btn btn-light">Leer más</a>
+            </div>
+        </div>
     </div>
     {% endfor %}
+</div>
 
+<!-- Paginación -->
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Página de noticias">
+        <ul class="pagination">
+            {% if noticias.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1&buscaNoticia={{ request.GET.buscaNoticia }}" aria-label="Primera">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ noticias.previous_page_number }}&buscaNoticia={{ request.GET.buscaNoticia }}" aria-label="Anterior">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">{{ noticias.number }}</span>
+            </li>
+            {% if noticias.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ noticias.next_page_number }}&buscaNoticia={{ request.GET.buscaNoticia }}" aria-label="Siguiente">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ noticias.paginator.num_pages }}&buscaNoticia={{ request.GET.buscaNoticia }}" aria-label="Última">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
 
 {% endblock contenido %}
+
