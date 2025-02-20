@@ -172,7 +172,7 @@ class EditarComentarios(LoginRequiredMixin, StaffRequiredMixin ,UpdateView):
     model=Comentario
     form_class = comentarios_form
     template_name = 'appmustafa/editarComentarios.html'
-    success_url = reverse_lazy('editarComentarios')
+    success_url = reverse_lazy('listarComentarios')
 
     def form_valid(self, form):
         messages.success(self.request, 'Comentario editado correctamente')
