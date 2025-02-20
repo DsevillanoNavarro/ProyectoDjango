@@ -1,12 +1,14 @@
 {% extends 'appmustafa/base.html' %}
 
-        {% block titulo %}CONFIRMAR BORRADO{% endblock %}
-        {% block contenido %}
-        <h2>Estás seguro de que quieres borrar a {{animal}}</h2>
-        <form action="" method="POST">
-                {% csrf_token %}
-                <input type="submit" value="Si">
-                
-        </form>
-        <a href="{% url 'listarAnimales' %}"><input type="button" value="NO"></input></a>
-        {% endblock %}
+{% block titulo %}CONFIRMAR BORRADO{% endblock %}
+
+{% block contenido %}
+<div class="container text-center text-light" style="background-color: black; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto;">
+    <h2 class="mb-4">¿Estás seguro de que quieres borrar a {{ animal }}?</h2>
+    <form action="" method="POST" class="mb-3">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sí</button>
+        <a href="{% url 'listarAnimales' %}" class="btn btn-secondary">No</a>
+    </form>
+</div>
+{% endblock %}

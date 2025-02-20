@@ -16,7 +16,6 @@ Including another URLconf
 """
 
 from django.urls import path
-
 from proyectomustafa import settings
 from . import views
 from .views import *
@@ -42,7 +41,8 @@ urlpatterns = [
     path('usuario/admin/borrarComentarios/<int:pk>', BorrarComentarios.as_view(), name="borrarComentarios"),
     path('usuario/admin/editarNoticia/<int:pk>', EditarNoticias.as_view(), name="editarNoticias"),
     path('usuario/admin/borrarNoticia/<int:pk>', BorrarNoticias.as_view(), name="borrarNoticias"),
-    
+    path('sobreNosotros', sobreNosotros, name="sobreNosotros"),
+    path('contacto', contacto, name="contacto"),
     path('crearAdopciones/<int:pk>', CrearAdopciones.as_view(), name="crearAdopciones"),
     path('usuario/admin/listarAdopciones', ListarAdopciones.as_view(), name="listarAdopciones"),
     path('usuario/admin/detalleAdopciones/<int:pk>', DetalleAdopciones.as_view(), name="detalleAdopciones"),

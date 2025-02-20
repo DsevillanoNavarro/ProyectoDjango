@@ -1,0 +1,24 @@
+{% extends 'appmustafa/base.html' %}
+{% load static %}
+{% block estilo %} 
+<link rel="stylesheet" href="{% static 'css/principal.css' %}" /> 
+{% endblock estilo %}
+
+{% block titulo %}Sobre Nosotros{% endblock titulo %}
+
+{% block contenido %}
+
+<h1 style="text-align: center;">Sobre Nosotros</h1>
+
+<!-- Sección de la Asociación -->
+<div class="container mt-5">
+    <h2 class="text-center">La Asociación</h2>
+    <p>
+        La Asociación Animalistes Masquefa somos una asociación sin ánimo de lucro formada por un grupo de voluntarias y voluntarios. Esta organización se creó como un proyecto social que tenía como objetivo velar y controlar las colonias de gatos de nuestro pueblo, luchando contra el abandono y el maltrato animal. Nuestros esfuerzos van orientados a conseguir y mantener una convivencia equilibrada entre humanos y felinos, intentando controlar las colonias de gatos mediante una alimentación controlada y un proceso de esterilización (aplicando el método CES: Captura, Esterilización y Suelta).
+    </p>
+    <p>
+        Como en toda asociación sin ánimo de lucro, las personas que gestionan la organización, lo hacen (valga la redundancia) de forma voluntaria, sin retribución económica de ningún tipo. Somos gente comprometida con los animales que trabajamos por el bien de los mismos.
+    </p>
+</div>
+
+{% endblock contenido %}

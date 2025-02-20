@@ -1,0 +1,59 @@
+{% extends 'appmustafa/base.html' %}
+{% load static %}
+{% block estilo %} 
+<link rel="stylesheet" href="{% static 'css/principal.css' %}" /> 
+{% endblock estilo %}
+
+{% block titulo %}Contacto{% endblock titulo %}
+
+{% block contenido %}
+
+<h1 style="text-align: center;">Contacto</h1>
+
+<!-- Información de contacto -->
+<div class="container mt-5">
+    <h2 class="text-center">¡Hola!</h2>
+    <p>
+        Las visitas al centro son concertadas. Para pedir cita, deberéis enviar un correo electrónico a 
+        <a href="mailto:animalistesmasquefa@gmail.com">animalistesmasquefa@gmail.com</a>. 
+        Durante las visitas, los gatos del local estarán encantados de recibir vuestra atención y cariño. 
+        Podéis venir a verlos, jugar con ellos y darles todo el cariño que queráis, ¡estarán encantados de recibirlo!
+    </p>
+    <p>
+        Por lo que respecta a los humanos, estaremos encantados de recibiros y responder a vuestras dudas 
+        (si es que tenéis alguna).
+    </p>
+    <p>
+        Podéis encontrarnos aquí mismo: (justo al lado de Protección Civil)
+    </p>
+
+    <h3 class="text-center">Formulario de Contacto</h3>
+    <p class="text-center">
+        Si queréis contactar con nosotros, podéis enviarnos un correo electrónico a 
+        <a href="mailto:animalistesmasquefa@gmail.com">animalistesmasquefa@gmail.com</a> 
+        o podéis llenar este formulario:
+    </p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="mensaje">Mensaje</label>
+                    <textarea class="form-control" id="mensaje" name="mensaje" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock contenido %}

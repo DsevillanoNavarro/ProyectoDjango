@@ -17,7 +17,7 @@
             <img src="{{ noticia.imagen.url }}" class="card-img-top" alt="Imagen de {{ noticia.titulo }}">
             <div class="card-body">
                 <h5 class="card-title">{{ noticia.titulo }} - {{ noticia.fecha_publicacion }}</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text">{{ noticia.contenido|slice:":50" }}</p>
                 <a href="{% url 'detalleNoticias' pk=noticia.pk  %}" class="btn btn-light">Leer más</a>
             </div>
         </div>
@@ -27,38 +27,40 @@
 
 <!-- Paginación -->
 <div class="d-flex justify-content-center mt-4">
-    <nav aria-label="Página de noticias">
-        <ul class="pagination">
-            {% if noticias.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page=1&buscaNoticia={{ request.GET.buscaNoticia }}" aria-label="Primera">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ noticias.previous_page_number }}&buscaNoticia={{ request.GET.buscaNoticia }}" aria-label="Anterior">
-                        <span aria-hidden="true">&lt;</span>
-                    </a>
-                </li>
-            {% endif %}
-            <li class="page-item active" aria-current="page">
-                <span class="page-link">{{ noticias.number }}</span>
-            </li>
-            {% if noticias.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ noticias.next_page_number }}&buscaNoticia={{ request.GET.buscaNoticia }}" aria-label="Siguiente">
-                        <span aria-hidden="true">&gt;</span>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ noticias.paginator.num_pages }}&buscaNoticia={{ request.GET.buscaNoticia }}" aria-label="Última">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
+    <nav>
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1{% if request.GET.orden %}&orden={{ request.GET.orden }}{% endif %}" aria-label="Primera">
+            <span aria-hidden="true">&laquo;&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.orden %}&orden={{ request.GET.orden }}{% endif %}" aria-label="Anterior">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% endif %}
+  
+        <li class="page-item disabled">
+          <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+        </li>
+  
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.orden %}&orden={{ request.GET.orden }}{% endif %}" aria-label="Siguiente">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.orden %}&orden={{ request.GET.orden }}{% endif %}" aria-label="Última">
+            <span aria-hidden="true">&raquo;&raquo;</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
     </nav>
-</div>
+  </div>
 
 {% endblock contenido %}
 

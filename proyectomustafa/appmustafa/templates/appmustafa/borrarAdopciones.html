@@ -4,11 +4,11 @@
 
 {% block contenido %}
 <div class="container text-center text-light" style="background-color: black; padding: 20px; border-radius: 10px; max-width: 500px; margin: auto;">
-    <h2 class="mb-4">¿Estás seguro de que quieres borrar a {{ comentario.contenido }}?</h2>
+    <h2 class="mb-4">¿Estás seguro de que quieres borrar la adopción de {{ adopcion }}?</h2>
     <form action="" method="POST" class="mb-3">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">Sí</button>
-        <a href="{% url 'listarComentarios' %}" class="btn btn-secondary">No</a>
+        <a href="{% url 'listarAdopciones' %}" class="btn btn-secondary">No</a>
     </form>
 </div>
 {% endblock %}

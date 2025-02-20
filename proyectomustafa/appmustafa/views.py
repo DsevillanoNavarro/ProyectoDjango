@@ -10,8 +10,21 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.db.models import Q
 
+def sobreNosotros(request):
+    return render(request, 'appmustafa/sobrenosotros.html')
+def contacto(request):
+    return render(request, 'appmustafa/contacto.html')
 def principal(request):
-    return render(request, 'appmustafa/principal.html')
+    # Obtener los 4 últimos animales registrados (por el ID, que se incrementa automáticamente)
+    animales = Animal.objects.all().order_by('-id')[:4]
+
+    # Obtener las 3 últimas noticias (por el ID, que se incrementa automáticamente)
+    noticias = Noticia.objects.all().order_by('-id')[:3]
+
+    return render(request, 'appmustafa/principal.html', {
+        'animales': animales,
+        'noticias': noticias
+    })
 
 class CrearRegistro(CreateView):
     form_class = UserCreationForm
@@ -44,11 +57,19 @@ class EditarAnimales(LoginRequiredMixin, StaffRequiredMixin ,UpdateView):
     form_class = animales_form
     template_name = 'appmustafa/editarAnimales.html'
     success_url = reverse_lazy('listarAnimales')
-    
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Animal editado correctamente')
+        return super().form_valid(form)
+
 class BorrarAnimales(LoginRequiredMixin, StaffRequiredMixin ,DeleteView):
     model=Animal
     template_name = 'appmustafa/borrarAnimales.html'
     success_url = reverse_lazy('listarAnimales')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Animal eliminado correctamente')
+        return super().form_valid(form)
     
 class ListarAnimales(LoginRequiredMixin, StaffRequiredMixin ,ListView):
     model=Animal
@@ -66,37 +87,42 @@ class CrearNoticias(LoginRequiredMixin, StaffRequiredMixin ,CreateView):
     template_name = 'appmustafa/crearNoticias.html'
     success_url = reverse_lazy('noticias')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'Noticia creada correctamente')
+        return super().form_valid(form)
+
 class UserMenuView(TemplateView):
     template_name = 'appmustafa/usuario.html'
-    
-class CrearNoticias(LoginRequiredMixin, StaffRequiredMixin , CreateView):
-    model=Noticia
-    form_class = noticias_form
-    template_name = 'appmustafa/crearNoticias.html'
-    success_url = reverse_lazy('listarNoticias')
     
 class ListarNoticias(LoginRequiredMixin, StaffRequiredMixin ,ListView):
     model=Noticia
     template_name='appmustafa/listarNoticiasAdmin.html'
     context_object_name = 'noticias'
-    
+
 class EditarNoticias(LoginRequiredMixin, StaffRequiredMixin ,UpdateView):
     model=Noticia
     form_class = noticias_form
     template_name = 'appmustafa/editarNoticias.html'
     success_url = reverse_lazy('listarNoticias')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Noticia editada correctamente')
+        return super().form_valid(form)
+
 class BorrarNoticias(LoginRequiredMixin, StaffRequiredMixin ,DeleteView):
     model=Noticia
     template_name = 'appmustafa/borrarNoticias.html'
     success_url = reverse_lazy('listarNoticias')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Noticia eliminada correctamente')
+        return super().form_valid(form)
 
 class Noticias(ListView):
     model=Noticia
     template_name='appmustafa/noticias.html'
     context_object_name = 'noticias'
     paginate_by = 3
-    
-    
     
     def get_queryset(self):
         query = self.request.GET.get('buscaNoticia', '')  
@@ -133,6 +159,7 @@ class DetallesNoticias(DetailView):
                 return redirect('login')
             
             comentario.save()
+            messages.success(self.request, 'Comentario agregado correctamente')
             return redirect(reverse('detalleNoticias', kwargs={'pk': self.object.pk}))
         return self.render_to_response(self.get_context_data(form=form))
 
@@ -146,40 +173,74 @@ class EditarComentarios(LoginRequiredMixin, StaffRequiredMixin ,UpdateView):
     form_class = comentarios_form
     template_name = 'appmustafa/editarComentarios.html'
     success_url = reverse_lazy('editarComentarios')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Comentario editado correctamente')
+        return super().form_valid(form)
+
 class BorrarComentarios(LoginRequiredMixin, StaffRequiredMixin ,DeleteView):
     model=Comentario
     template_name = 'appmustafa/borrarComentarios.html'
     success_url = reverse_lazy('listarComentarios')
 
-class CrearAdopciones(LoginRequiredMixin,CreateView):
+    def form_valid(self, form):
+        messages.success(self.request, 'Comentario eliminado correctamente')
+        return super().form_valid(form)
+
+class CrearAdopciones(LoginRequiredMixin, CreateView):
     model = Adopcion
     fields = ['contenido']
     template_name = 'appmustafa/crearAdopciones.html' 
     success_url = reverse_lazy('animales')  
 
     def form_valid(self, form):
-        form.instance.usuario = self.request.user
-        form.instance.animal = get_object_or_404(Animal, id=self.kwargs.get('pk'))
+        usuario = self.request.user
+        animal = get_object_or_404(Animal, id=self.kwargs.get('pk'))
+
+        # Verificar si el usuario ya ha adoptado este animal
+        if Adopcion.objects.filter(usuario=usuario, animal=animal).exists():
+            messages.error(self.request, 'Ya has adoptado este animal anteriormente.')
+            return redirect(self.success_url)  # Redirige sin crear la adopción
+
+        form.instance.usuario = usuario
+        form.instance.animal = animal
+        messages.success(self.request, 'Adopción realizada correctamente.')
         return super().form_valid(form)
+
 
 class ListarAdopciones(LoginRequiredMixin, StaffRequiredMixin ,ListView):
     model=Adopcion
     template_name='appmustafa/listarAdopcionesAdmin.html'
     context_object_name = 'adopciones'
 
-class DetalleAdopciones(LoginRequiredMixin, StaffRequiredMixin ,UpdateView):
-    model=Adopcion
+class DetalleAdopciones(LoginRequiredMixin, StaffRequiredMixin, UpdateView):
+    model = Adopcion
     fields = '__all__'
     template_name = 'appmustafa/detalleAdopciones.html'
     context_object_name = 'adopcion'
-    
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
+
+        # Aceptar la adopción
         self.object.aceptada = True
         self.object.save()
+
+        # Eliminar todas las adopciones no aceptadas para el mismo animal
+        animal = self.object.animal  # Ajusta 'animal' a la relación de tu modelo
+
+        # Elimina todas las adopciones no aceptadas para este animal, excepto la actual
+        Adopcion.objects.filter(animal=animal).exclude(id=self.object.id).delete()
+
+        messages.success(self.request, 'Adopción aceptada correctamente y otras adopciones relacionadas han sido eliminadas.')
+        
         return redirect('detalleAdopciones', pk=self.object.id)
     
 class BorrarAdopciones(LoginRequiredMixin, StaffRequiredMixin ,DeleteView):
     model=Adopcion
     template_name = 'appmustafa/borrarAdopciones.html'
     success_url = reverse_lazy('listarComentarios')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Adopción eliminada correctamente')
+        return super().form_valid(form)
