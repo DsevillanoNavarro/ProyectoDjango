@@ -3,12 +3,6 @@
 
 > Un completo sistema web en Django para gestionar animales en adopción, publicar noticias, administrar comentarios y conectar con una comunidad solidaria.
 
----
-
-![Django](https://img.shields.io/badge/Django-5.1.3-success?style=for-the-badge&logo=django)
-![Estado del proyecto](https://img.shields.io/badge/Estado-En%20Desarrollo-orange?style=for-the-badge)
-![Licencia](https://img.shields.io/badge/Licencia-MIT-blue?style=for-the-badge)
-
 ## 📚 Documentación
 
 Consulta la guía completa del proyecto, arquitectura, ejemplos de uso y más en:
